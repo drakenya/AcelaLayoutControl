@@ -1,4 +1,4 @@
-package sample;
+package net.krolla.acela_layout_control;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
