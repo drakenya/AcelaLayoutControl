@@ -1,14 +1,17 @@
 package net.krolla.acela_layout_control.view;
 
 import net.krolla.acela_layout_control.model.Network;
+import net.krolla.acela_layout_control.service.layout.Layout;
 
 public class NetworkPresenter {
     private final Network network;
     private final NetworkView networkView;
+    private final Layout layout;
 
-    public NetworkPresenter(Network network, NetworkView networkView) {
+    public NetworkPresenter(Network network, NetworkView networkView, Layout layout) {
         this.network = network;
         this.networkView = networkView;
+        this.layout = layout;
 
         attachEvents();
     }
@@ -21,10 +24,14 @@ public class NetworkPresenter {
     }
 
     private void handleNetworkStatus() {
+        if (network.getIsOnline()) {
+            layout.onlineNetwork();
+        } else {
+            layout.offlineNetwork();
+        }
+
         network.setIsOnline(!network.getIsOnline());
     }
 
-    private void handlePollNetwork() {
-
-    }
+    private void handlePollNetwork() { layout.pollNetwork(); }
 }
