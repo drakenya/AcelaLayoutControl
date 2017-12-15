@@ -7,6 +7,16 @@
     <groupId>net.krolla</groupId>
     <artifactId>AcelaLayoutControl</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.fazecast</groupId>
+            <artifactId>jSerialComm</artifactId>
+            <version>1.3.11</version>
+        </dependency>
+    </dependencies>
 
-    
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 </project>
