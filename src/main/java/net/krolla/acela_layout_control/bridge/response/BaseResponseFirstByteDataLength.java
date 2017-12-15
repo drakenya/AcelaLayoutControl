@@ -9,6 +9,6 @@ abstract class BaseResponseFirstByteDataLength extends BaseResponse {
         if (!isResultSuccessful()) { return false; }
 
         int dataSize = data.get(0);
-        return data.size() == dataSize;
+        return data.size() == (dataSize + 1);
     }
 }

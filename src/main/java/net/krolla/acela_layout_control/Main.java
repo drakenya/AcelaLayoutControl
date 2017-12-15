@@ -24,11 +24,15 @@ public class Main extends Application {
         );
 
         Acela acela = new Acela("cu.usbmodem1411");
+        acela.open();
+
         Layout layout = new Layout(network, acela);
 
         Scene scene = new Scene(networkView);
 
         NetworkPresenter networkPresenter = new NetworkPresenter(network, networkView, layout);
+
+        primaryStage.setOnCloseRequest(windowEvent -> acela.close());
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Layout Control");

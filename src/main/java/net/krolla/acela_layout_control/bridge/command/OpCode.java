@@ -4,7 +4,8 @@ public enum OpCode {
     NETWORK_ONLINE ((byte) 0x16),
     NETOWRK_RESET ((byte) 0x15),
     NETWORK_OFFLINE ((byte) 0x17),
-    POLL_NETWORK ((byte) 0x18);
+    POLL_NETWORK ((byte) 0x18),
+    READ_REVISION ((byte) 0x19);
 
     private final byte opCode;
 

@@ -1,5 +1,8 @@
 package net.krolla.acela_layout_control.bridge.response;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ResponseCode {
     PROCESSED_SUCCESSFULLY ((byte) 0x00),
     NETWORK_OFFLINE ((byte) 0x01),
@@ -9,12 +12,17 @@ public enum ResponseCode {
     COMMUNICATIONS_LOST ((byte) 0x82);
 
     private final byte responseCode;
+    private static Map<Byte, ResponseCode> map = new HashMap<>();
 
-    ResponseCode(byte responseCode) {
-        this.responseCode = responseCode;
+    ResponseCode(byte responseCode) { this.responseCode = responseCode; }
+
+    public byte getResponseCode() { return responseCode; }
+
+    static {
+        for (ResponseCode responseCode : ResponseCode.values()) {
+            map.put(responseCode.getResponseCode(), responseCode);
+        }
     }
 
-    public byte getResponseCode() {
-        return responseCode;
-    }
+    public static ResponseCode valueOf(byte responseCode) { return map.get(responseCode); }
 }

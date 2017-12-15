@@ -2,11 +2,11 @@ package net.krolla.acela_layout_control.service.layout;
 
 import net.krolla.acela_layout_control.bridge.BridgeInterface;
 import net.krolla.acela_layout_control.bridge.MessageReceivedListener;
-import net.krolla.acela_layout_control.bridge.command.BaseCommand;
-import net.krolla.acela_layout_control.bridge.command.NetworkOfflineCommand;
-import net.krolla.acela_layout_control.bridge.command.NetworkOnlineCommand;
-import net.krolla.acela_layout_control.bridge.command.PollNetworkCommand;
+import net.krolla.acela_layout_control.bridge.command.*;
 import net.krolla.acela_layout_control.bridge.response.BaseResponse;
+import net.krolla.acela_layout_control.bridge.response.CommunicationLostResponse;
+import net.krolla.acela_layout_control.bridge.response.NetworkOfflineResponse;
+import net.krolla.acela_layout_control.bridge.response.NetworkOnlineResponse;
 import net.krolla.acela_layout_control.model.Network;
 
 public class Layout {
@@ -17,7 +17,6 @@ public class Layout {
         this.network = network;
         this.bridge = bridge;
 
-        setUpNetwork();
         setUpBridge();
     }
 
@@ -25,15 +24,11 @@ public class Layout {
         bridge.setReceivedListener(new MessageReceivedListener() {
             @Override
             public void receivedMessage(BaseResponse response) {
-                System.out.println("Received response: " + response);
+                if (response instanceof NetworkOnlineResponse) { network.setIsOnline(true); }
+                if (response instanceof NetworkOfflineResponse) { network.setIsOnline(false); }
+                if (response instanceof CommunicationLostResponse) { network.setIsOnline(false); }
             }
         });
-    }
-
-    private void setUpNetwork() {
-        network.isOnlineProperty().addListener(((observable, oldValue, newValue) -> {
-            System.out.println("HUH DO I NEED TO BE HERE?");
-        }));
     }
 
     public void onlineNetwork() { sendCommandToBridge(new NetworkOnlineCommand()); }
@@ -42,11 +37,12 @@ public class Layout {
 
     public void pollNetwork() { sendCommandToBridge(new PollNetworkCommand()); }
 
-    private void sendCommandToBridge(BaseCommand command) {
-        synchronized (this) {
-            if (!network.getIsOnline() || !bridge.isOpen()) { return; }
+    public void requestFirmwareVersion() { sendCommandToBridge(new ReadRevisionCommand());}
 
-            bridge.sendCommand(command);
-        }
+    private void sendCommandToBridge(BaseCommand command) {
+        // if the network is not currently operating, and we aren't starting it, then ignore commands
+        if ((!network.getIsOnline() || !bridge.isOpen()) && !(command instanceof NetworkOnlineCommand)) { return; }
+
+        bridge.sendCommand(command);
     }
 }
