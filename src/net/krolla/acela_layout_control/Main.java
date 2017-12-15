@@ -1,18 +1,32 @@
 package net.krolla.acela_layout_control;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.krolla.acela_layout_control.model.Network;
+import net.krolla.acela_layout_control.view.NetworkPresenter;
+import net.krolla.acela_layout_control.view.NetworkView;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Network network = new Network();
+        NetworkView networkView = new NetworkView(network);
+        networkView.setStyle("-fx-padding: 10;" +
+                "-fx-border-style: solid inside;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: blue;"
+        );
+
+        Scene scene = new Scene(networkView);
+
+        NetworkPresenter networkPresenter = new NetworkPresenter(network, networkView);
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Layout Control");
         primaryStage.show();
     }
 
