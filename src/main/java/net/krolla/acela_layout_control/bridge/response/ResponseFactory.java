@@ -15,6 +15,7 @@ public class ResponseFactory {
         if (command instanceof NetworkOfflineCommand) { return  new NetworkOfflineResponse(responseCode); }
         if (command instanceof PollNetworkCommand) { return new PollNetworkResponse(responseCode); }
         if (command instanceof ReadRevisionCommand) { return new ReadRevisionResponse(responseCode); }
+        if (command instanceof ReadAllSensorsCommand) { return new ReadAllSensorsResponse(responseCode); }
 
         throw new Exception("Not a supported type: " + command);
     }

@@ -11,6 +11,7 @@ public class NetworkView extends GridPane{
     Button networkStatusBtn = new Button("Network Status");
     Button pollNetworkBtn = new Button("Poll Network");
     Button requestFirmwareVersionBtn = new Button("Get Firmware Version");
+    Button readAllSensorsBtn = new Button("Read Sensors");
 
     public void updateStatusButton() {
         if (network.getIsOnline()) {
@@ -27,6 +28,7 @@ public class NetworkView extends GridPane{
         this.add(networkStatusBtn, 1, 1);
         this.add(pollNetworkBtn, 2, 1);
         this.add(requestFirmwareVersionBtn, 2, 2);
+        this.add(readAllSensorsBtn, 2, 3);
     }
 
     public NetworkView(Network network) {

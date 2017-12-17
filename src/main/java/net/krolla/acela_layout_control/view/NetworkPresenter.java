@@ -20,6 +20,7 @@ public class NetworkPresenter {
         networkView.networkStatusBtn.setOnAction(e -> handleNetworkStatus());
         networkView.pollNetworkBtn.setOnAction(e -> layout.pollNetwork());
         networkView.requestFirmwareVersionBtn.setOnAction(e -> layout.requestFirmwareVersion());
+        networkView.readAllSensorsBtn.setOnAction(e -> layout.readAllSensors());
 
         network.isOnlineProperty().addListener((observable, oldValue, newValue) -> networkView.updateStatusButton());
     }
